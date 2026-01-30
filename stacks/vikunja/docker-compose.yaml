@@ -1,0 +1,39 @@
+services:
+  vikunja:
+    image: vikunja/vikunja
+    user: 1000:1000
+    env_file:
+      - .env
+    volumes:
+      - /srv/apps/vikunja/files:/app/vikunja/files
+    networks:
+      - proxy
+      - default
+    ports: 
+      - 3456:3456
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    labels:
+      traefik.enable: true
+      traefik.http.routers.plan.entrypoints: websecure
+      traefik.http.routers.plan.rule: Host(`plan.burgoyne.casa`)
+      traefik.http.routers.plan.tls: "true"
+      traefik.http.routers.plan.tls.certresolver: letsencrypt
+  db:
+    image: postgres:18
+    user: 1000:1000
+    env_file:
+      - .env
+    volumes:
+      - /srv/apps/vikunja/db:/var/lib/postgresql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
+      interval: 2s
+      start_period: 30s
+
+networks:
+  proxy:
+    external: true
