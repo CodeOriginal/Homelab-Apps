@@ -3,8 +3,11 @@ services:
     image: couchdb:latest
     container_name: couchdb-for-ols
     user: 1000:1000
-    env_file:
-      - .env
+    environment:
+      SERVER_URL: ${SERVER_URL}
+      COUCHDB_USER: ${COUCHDB_USER}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
+      COUCHDB_DATABASE: ${COUCHDB_DATABASE}
     volumes:
       - /srv/apps/couchdb/data:/opt/couchdb/data
       - /srv/apps/couchdb/etc:/opt/couchdb/etc/local.d
