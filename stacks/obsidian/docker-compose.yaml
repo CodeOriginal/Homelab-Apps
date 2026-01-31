@@ -1,7 +1,7 @@
 services:
   couchdb:
     image: couchdb:latest
-    container_name: couchdb-for-ols
+    container_name: Obsidian-CouchDB
     user: 1000:1000
     environment:
       SERVER_URL: ${SERVER_URL}
