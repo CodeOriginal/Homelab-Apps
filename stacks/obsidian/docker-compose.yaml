@@ -1,0 +1,25 @@
+services:
+  couchdb:
+    image: couchdb:latest
+    container_name: couchdb-for-ols
+    user: 1000:1000
+    env_file:
+      - .env
+    volumes:
+      - /srv/apps/couchdb/data:/opt/couchdb/data
+      - /srv/apps/couchdb/etc:/opt/couchdb/etc/local.d
+    ports:
+      - 5984:5984
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.couchdb.entrypoints=websecure"
+      - "traefik.http.routers.couchdb.rule=Host(`obsidian.burgoyne.casa`)"
+      - "traefik.http.routers.couchdb.tls=true"
+      - "traefik.http.routers.couchdb.tls.certresolver=letsencrypt"
+
+networks:
+  proxy:
+    external: true
