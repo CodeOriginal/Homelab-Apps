@@ -7,7 +7,7 @@
 #
 # The compose file on main may not be compatible with the latest release.
 
-name: immich
+name: hl-apps-immich
 
 services:
   immich-server:
@@ -36,7 +36,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.immich.entrypoints=websecure"
-      - "traefik.http.routers.immich.rule=Host(`immich.burgoyne.casa`) || Host(`photos.burgoyne.casa`)"
+      - "traefik.http.routers.immich.rule=Host(`photos.burgoyne.casa`)"
       - "traefik.http.routers.immich.tls=true"
       - "traefik.http.routers.immich.tls.certresolver=letsencrypt"
 

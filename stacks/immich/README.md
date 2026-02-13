@@ -1,4 +1,4 @@
-# homelab-immich
+# homelab-apps/immich
 
 Isolated stack for Immich.
 
